@@ -5,29 +5,32 @@
 # structure of program: 
 
 
-toPay = int(float(input('Amount to pay: '))* 100) # The amount you need to pay
-paid = int(float(input('Paid amount: ')) * 100) # The amount you payed with
-change = paid - toPay # The amount you will get back
+toPay = int(float(input('Amount to pay: '))* 100) #Turn input into a float, multiplies by 100
+paid = int(float(input('Paid amount: ')) * 100) #Turn input into a float, multiplies by 100
+change = paid - toPay
 
-if change > 0: # If statment for change
-  coinValue = 50 # The value for the coin
+changeList = []
+
+if change > 0: #checks if any change is even needed
+  coinValue = 500 #sets starting coin value, in this case €5
   
-  while change > 0 and coinValue > 0: #
-    nrCoins = change // coinValue # Calculations for nrCoins
+  while change > 0 and coinValue > 0: #checks if there is any coin value and change left to pay
+    nrCoins = change // coinValue #floor devision to return maximum possible integer
 
-    if nrCoins > 0: # If statment for nrCoins
-      print('return maximal ', nrCoins, ' coins of ', coinValue, ' cents!' ) # Print statment for how much coins you need
-      nrCoinsReturned = int(input('How many coins of ' + str(coinValue) +  ' cents did you return? ')) # Print statment for how much coins you returned
-      change -= nrCoinsReturned * coinValue # This Calculates the change in coin value
+    if nrCoins > 0: #prints the max amount of coins possible with current coin value
+      print('return maximal', nrCoins, 'coins of', coinValue, 'cents!') #prints text to tell the user which coinvalue they're at and the max amount of coins being able to be payed out with that value
+      nrCoinsReturned = int(input('How many coins of ' + str(coinValue) +  ' cents did you return?\n')) #asks user for input, converts it to an int, and stores it to be used in change
+      changeList.append(str(nrCoins)+' coins of €'+str(format(float(coinValue/100),'.2f')))
+      change -= nrCoinsReturned * coinValue #change = change - (nrCoinsReturned * coinValue), change is recalculated to see if while is still true
 
-# comment on code below:
+# comment on code below: decreases coin value in set steps for nrCoins
     if coinValue == 500:
       coinValue = 300
-    if coinValue == 300:
+    elif coinValue == 300:
       coinValue = 200
-    if coinValue == 200:
+    elif coinValue == 200:
       coinValue = 50
-    if coinValue == 50:
+    elif coinValue == 50:
       coinValue = 20
     elif coinValue == 20:
       coinValue = 10
@@ -40,7 +43,10 @@ if change > 0: # If statment for change
     else:
       coinValue = 0
 
-if change > 0: # If statment for if change is good or not
+if change > 0: #if any change was not able to be payed because of coin incompat prints leftover amount, prints done when change was able to be payed in full
   print('Change not returned: ', str(change) + ' cents')
 else:
-  print('done')
+  print('Done. Gave back:')
+  x = 0
+  for x in range(len(changeList)):
+    print(str(changeList[x].replace('.',',').replace(',00','')+'.'))
