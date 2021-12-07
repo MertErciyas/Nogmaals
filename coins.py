@@ -4,10 +4,9 @@
 # function of program: Turns value into an amount of comments
 # structure of program: 
 
-
-toPay = int(float(input('Amount to pay: '))* 100) #Turn input into a float, multiplies by 100
-paid = int(float(input('Paid amount: ')) * 100) #Turn input into a float, multiplies by 100
-change = paid - toPay
+toPay = int(float(input('Amount to pay: '))* 100) #turns input into float in case of cents, multiplies by 100 to make a valid int
+paid = int(float(input('Paid amount: ')) * 100) #turns input into float in case of cents, multiplies by 100 to make a valid int
+change = paid - toPay #
 
 changeList = []
 
@@ -43,8 +42,11 @@ if change > 0: #checks if any change is even needed
     else:
       coinValue = 0
 
-if change > 0: #if any change was not able to be payed because of coin incompat prints leftover amount, prints done when change was able to be payed in full
+if change > 0: #if any cahnge was not able to be payed because of coin incompat prints leftover amount, prints done when change was able to be payed in full
   print('Change not returned: ', str(change) + ' cents')
+  x = 0
+  for x in range(len(changeList)):int(str(changeList[x].replace('.',',').replace(',00','')+'.'))
+
 else:
   print('Done. Gave back:')
   x = 0
